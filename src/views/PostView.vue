@@ -4,12 +4,13 @@
     <div class="relative h-64 md:h-80 overflow-hidden">
       <img :src="post.image" :alt="post.title" class="w-full h-full object-cover">
       <div class="absolute inset-0 bg-gradient-to-b from-dark/40 to-dark/70"></div>
-      <div class="container mx-auto px-4 h-full flex flex-col justify-end relative z-10 pb-10">
-        <div class="max-w-4xl mx-auto">
+      <!-- 与文章内容对齐的容器 -->
+      <div class="container mx-auto px-4 h-full flex flex-col justify-end relative z-10 pb-10" style="width: 85%;">
+        <div class="max-w-4xl">
           <div class="flex flex-wrap gap-2 mb-4">
             <span v-for="tag in post.tags" :key="tag" class="px-3 py-1 bg-primary/80 text-white text-sm rounded-md">{{ tag }}</span>
           </div>
-          <h1 class="text-3xl md:text-4xl font-bold text-white mb-2">{{ post.title }}</h1>
+          <h1 class="text-3xl md:text-4xl lg:text-5xl font-bold text-white mb-2">{{ post.title }}</h1>
           <div class="flex items-center text-gray-200 text-sm">
             <span class="flex items-center mr-4">
               <i class="fa fa-calendar-o mr-1"></i> {{ post.date }}
@@ -30,20 +31,20 @@
           <div class="lg:col-span-3">
             <article class="glass-effect p-6 md:p-8 rounded-xl">
               <div class="post-content" v-html="post.content"></div>
-              
+
               <!-- 文章标签 -->
-              <div class="mt-8 pt-6 border-t border-gray-200">
+              <div class="mt-8 pt-6 border-t border-gray-200 dark:border-gray-700">
                 <div class="flex flex-wrap gap-2">
-                  <span class="text-gray-700 font-medium">标签：</span>
-                  <span v-for="tag in post.tags" :key="tag" class="tag bg-gray-100 text-gray-700">
+                  <span class="text-gray-700 dark:text-gray-300 font-medium">标签：</span>
+                  <span v-for="tag in post.tags" :key="tag" class="tag bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300">
                     {{ tag }}
                   </span>
                 </div>
               </div>
-              
+
               <!-- 分享按钮 -->
               <div class="mt-6 flex items-center">
-                <span class="text-gray-700 font-medium mr-4">分享：</span>
+                <span class="text-gray-700 dark:text-gray-300 font-medium mr-4">分享：</span>
                 <div class="flex space-x-3">
                   <button class="w-10 h-10 rounded-full bg-[#1DA1F2]/10 text-[#1DA1F2] flex items-center justify-center hover:bg-[#1DA1F2]/20 transition-colors duration-300">
                     <i class="fa fa-twitter"></i>
@@ -54,112 +55,59 @@
                   <button class="w-10 h-10 rounded-full bg-[#0A66C2]/10 text-[#0A66C2] flex items-center justify-center hover:bg-[#0A66C2]/20 transition-colors duration-300">
                     <i class="fa fa-linkedin"></i>
                   </button>
-                  <button class="w-10 h-10 rounded-full bg-[#25D366]/10 text-[#25D366] flex items-center justify-center hover:bg-[#25D366]/20 transition-colors duration-300">
-                    <i class="fa fa-whatsapp"></i>
-                  </button>
                 </div>
               </div>
             </article>
-            
-            <!-- 评论区 -->
-            <div class="mt-8 glass-effect p-6 md:p-8 rounded-xl">
-              <h3 class="text-2xl font-bold mb-6">评论 ({{ comments.length }})</h3>
-              
-              <!-- 评论表单 -->
-              <div class="mb-8">
-                <textarea 
-                  class="w-full h-32 p-4 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent"
-                  placeholder="写下你的评论..."></textarea>
-                <button class="mt-4 px-6 py-2 bg-primary text-white rounded-lg hover:bg-secondary transition-colors duration-300">
-                  提交评论
-                </button>
-              </div>
-              
-              <!-- 评论列表 -->
-              <div class="space-y-6">
-                <div v-for="comment in comments" :key="comment.id" class="border-b border-gray-200 pb-6">
-                  <div class="flex items-start">
-                    <div class="w-12 h-12 rounded-full bg-gray-200 flex items-center justify-center text-gray-600 mr-4 flex-shrink-0">
-                      <i class="fa fa-user"></i>
-                    </div>
-                    <div class="flex-grow">
-                      <div class="flex items-center mb-1">
-                        <h4 class="font-bold text-gray-800 mr-2">{{ comment.author }}</h4>
-                        <span class="text-gray-500 text-sm">{{ comment.date }}</span>
-                      </div>
-                      <p class="text-gray-700">{{ comment.content }}</p>
-                      <div class="mt-2 flex items-center text-sm">
-                        <button class="text-gray-500 hover:text-primary transition-colors duration-300 flex items-center">
-                          <i class="fa fa-thumbs-up mr-1"></i> {{ comment.likes }}
-                        </button>
-                        <button class="text-gray-500 hover:text-primary transition-colors duration-300 ml-4 flex items-center">
-                          <i class="fa fa-reply mr-1"></i> 回复
-                        </button>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              
-              <!-- 加载更多评论 -->
-              <div class="mt-6 text-center">
-                <button class="px-6 py-2 border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors duration-300">
-                  加载更多评论
-                </button>
-              </div>
-            </div>
           </div>
-          
+
           <!-- 侧边栏 -->
-          <div class="lg:col-span-1">
+          <div class="lg:col-span-1 space-y-6">
             <!-- 作者信息 -->
-            <div class="glass-effect p-6 rounded-xl mb-6">
-              <div class="flex flex-col items-center text-center">
-                <div class="w-24 h-24 rounded-full overflow-hidden border-4 border-white shadow-lg mb-4">
-                  <img src="https://p3-flow-imagex-sign.byteimg.com/tos-cn-i-a9rns2rl98/rc/pc/super_tool/905e70cacd784d399614f9360b83d117~tplv-a9rns2rl98-image.image?rcl=202511191001432FDB426A7F2164EABA08&rk3s=8e244e95&rrcfp=f06b921b&x-expires=1766109744&x-signature=wrpel0AQtf4mcN9KoUhO%2FuZ0KeY%3D" 
-                       alt="作者头像" 
-                       class="w-full h-full object-cover">
-                </div>
-                <h3 class="text-xl font-bold text-gray-800 mb-1">Sakura</h3>
-                <p class="text-gray-600 mb-4">前端开发者 | 摄影师 | 旅行爱好者</p>
-                <p class="text-gray-700 text-sm">记录生活，分享思考，探索未知</p>
-                <div class="mt-4 flex space-x-3">
-                  <a href="#" class="w-8 h-8 rounded-full bg-gray-100 text-gray-600 flex items-center justify-center hover:bg-primary hover:text-white transition-colors duration-300">
-                    <i class="fa fa-github"></i>
-                  </a>
-                  <a href="#" class="w-8 h-8 rounded-full bg-gray-100 text-gray-600 flex items-center justify-center hover:bg-primary hover:text-white transition-colors duration-300">
-                    <i class="fa fa-twitter"></i>
-                  </a>
-                  <a href="#" class="w-8 h-8 rounded-full bg-gray-100 text-gray-600 flex items-center justify-center hover:bg-primary hover:text-white transition-colors duration-300">
-                    <i class="fa fa-linkedin"></i>
-                  </a>
+            <div class="glass-effect p-6 rounded-xl">
+              <div class="flex items-center mb-4">
+                <img src="https://picsum.photos/id/64/200/200" alt="作者头像" class="w-16 h-16 rounded-full object-cover">
+                <div class="ml-4">
+                  <h3 class="font-bold text-gray-800 dark:text-white">作者名称</h3>
+                  <p class="text-sm text-gray-600 dark:text-gray-400">前端开发者</p>
                 </div>
               </div>
+              <p class="text-gray-700 dark:text-gray-300 text-sm">热衷于分享前端开发经验和技术心得，致力于打造更好的用户体验。</p>
+              <div class="mt-4 flex space-x-3">
+                <a href="#" class="w-8 h-8 rounded-full bg-gray-100 dark:bg-gray-800 text-gray-600 dark:text-gray-400 flex items-center justify-center hover:bg-primary hover:text-white transition-colors duration-300">
+                  <i class="fa fa-github"></i>
+                </a>
+                <a href="#" class="w-8 h-8 rounded-full bg-gray-100 dark:bg-gray-800 text-gray-600 dark:text-gray-400 flex items-center justify-center hover:bg-primary hover:text-white transition-colors duration-300">
+                  <i class="fa fa-twitter"></i>
+                </a>
+                <a href="#" class="w-8 h-8 rounded-full bg-gray-100 dark:bg-gray-800 text-gray-600 dark:text-gray-400 flex items-center justify-center hover:bg-primary hover:text-white transition-colors duration-300">
+                  <i class="fa fa-linkedin"></i>
+                </a>
+              </div>
             </div>
-            
+
             <!-- 文章目录 -->
             <div class="glass-effect p-6 rounded-xl mb-6">
-              <h3 class="text-lg font-bold text-gray-800 mb-4">文章目录</h3>
+              <h3 class="text-lg font-bold text-gray-800 dark:text-white mb-4">文章目录</h3>
               <ul class="space-y-2">
                 <li v-for="(toc, index) in post.toc" :key="index">
                   <a :href="'#' + toc.id" class="toc-link">{{ toc.title }}</a>
                 </li>
               </ul>
             </div>
-            
+
             <!-- 相关文章 -->
             <div class="glass-effect p-6 rounded-xl">
-              <h3 class="text-lg font-bold text-gray-800 mb-4">相关文章</h3>
+              <h3 class="text-lg font-bold text-gray-800 dark:text-white mb-4">相关文章</h3>
               <div class="space-y-4">
                 <div v-for="relatedPost in relatedPosts" :key="relatedPost.id" class="related-post">
                   <div class="w-16 h-16 rounded overflow-hidden flex-shrink-0">
                     <img :src="relatedPost.image" :alt="relatedPost.title" class="w-full h-full object-cover">
                   </div>
                   <div class="ml-3">
-                    <h4 class="font-medium text-gray-800 hover:text-primary transition-colors duration-300">
+                    <h4 class="font-medium text-gray-800 dark:text-white hover:text-primary transition-colors duration-300">
                       <router-link :to="{ name: 'post', params: { id: relatedPost.id } }">{{ relatedPost.title }}</router-link>
                     </h4>
-                    <p class="text-gray-500 text-xs mt-1">{{ relatedPost.date }}</p>
+                    <p class="text-gray-500 dark:text-gray-400 text-xs mt-1">{{ relatedPost.date }}</p>
                   </div>
                 </div>
               </div>
@@ -376,36 +324,41 @@ onMounted(() => {
   font-weight: 500;
 }
 
-/* 文章内容样式 */
+/* 文章内容样式优化 */
+.post-content {
+  font-size: 1rem;
+  line-height: 1.8;
+  color: #374151;
+}
+
 .post-content h2 {
-  font-size: 1.5rem;
+  font-size: 1.75rem;
   font-weight: 700;
+  margin-top: 2.5rem;
+  margin-bottom: 1.25rem;
+  color: #1f2937;
+  padding-bottom: 0.5rem;
+  border-bottom: 1px solid #e5e7eb;
+}
+
+.post-content h3 {
+  font-size: 1.5rem;
+  font-weight: 600;
   margin-top: 2rem;
   margin-bottom: 1rem;
   color: #1f2937;
 }
 
-.post-content h3 {
-  font-size: 1.25rem;
-  font-weight: 600;
-  margin-top: 1.5rem;
-  margin-bottom: 0.75rem;
-  color: #1f2937;
-}
-
 .post-content p {
-  margin-top: 1rem;
-  margin-bottom: 1rem;
-  line-height: 1.75;
-  color: #4b5563;
+  margin-top: 1.25rem;
+  margin-bottom: 1.25rem;
 }
 
 .post-content ul,
 .post-content ol {
-  margin-top: 1rem;
-  margin-bottom: 1rem;
-  margin-left: 1.5rem;
-  color: #4b5563;
+  margin-top: 1.25rem;
+  margin-bottom: 1.25rem;
+  margin-left: 1.75rem;
 }
 
 .post-content ul {
@@ -417,14 +370,15 @@ onMounted(() => {
 }
 
 .post-content li {
-  margin-top: 0.25rem;
-  margin-bottom: 0.25rem;
+  margin-top: 0.5rem;
+  margin-bottom: 0.5rem;
 }
 
 .post-content a {
   color: #6366f1;
   text-decoration: underline;
   transition: color 0.3s ease;
+  font-weight: 500;
 }
 
 .post-content a:hover {
@@ -433,18 +387,19 @@ onMounted(() => {
 
 .post-content blockquote {
   border-left: 4px solid #6366f1;
-  padding-left: 1rem;
+  padding-left: 1.25rem;
   font-style: italic;
-  margin-top: 1.5rem;
-  margin-bottom: 1.5rem;
+  margin-top: 1.75rem;
+  margin-bottom: 1.75rem;
   color: #6b7280;
 }
 
 .post-content pre {
-  margin-top: 1rem;
-  margin-bottom: 1rem;
+  margin-top: 1.25rem;
+  margin-bottom: 1.25rem;
   border-radius: 0.5rem;
   overflow-x: auto;
+  padding: 1rem;
 }
 
 .post-content code {
@@ -452,6 +407,7 @@ onMounted(() => {
   padding: 0.25rem 0.5rem;
   border-radius: 0.375rem;
   font-size: 0.875rem;
+  font-family: 'JetBrains Mono', monospace;
 }
 
 .post-content pre code {
@@ -460,14 +416,15 @@ onMounted(() => {
 }
 
 .post-content img {
-  margin-top: 1.5rem;
-  margin-bottom: 1.5rem;
+  margin-top: 2rem;
+  margin-bottom: 2rem;
   border-radius: 0.5rem;
   box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
   max-width: 100%;
   height: auto;
   margin-left: auto;
   margin-right: auto;
+  display: block;
 }
 
 /* 深色模式样式 */
@@ -485,7 +442,7 @@ onMounted(() => {
 }
 
 .dark-mode .text-gray-600 {
-  color: #ffffff;
+  color: #e2e8f0;
 }
 
 .dark-mode .text-gray-500 {
@@ -522,19 +479,24 @@ onMounted(() => {
   color: #f1f5f9 !important;
 }
 
+.dark-mode .post-content {
+  color: #e2e8f0;
+}
+
 .dark-mode .post-content h2,
 .dark-mode .post-content h3,
 .dark-mode .post-content h4,
 .dark-mode .post-content h5,
 .dark-mode .post-content h6 {
   color: #ffffff !important;
+  border-color: #334155;
 }
 
 .dark-mode .post-content p,
 .dark-mode .post-content ul,
 .dark-mode .post-content ol,
 .dark-mode .post-content li {
-  color: #ffffff !important;
+  color: #e2e8f0 !important;
 }
 
 .dark-mode .post-content blockquote {
