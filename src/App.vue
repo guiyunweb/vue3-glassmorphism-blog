@@ -2,12 +2,14 @@
   <div class="min-h-screen flex flex-col">
     <!-- 导航栏 -->
     <HeaderComponent :is-dark-mode="isDarkMode" @toggle-theme="toggleTheme" />
-    
-    <!-- 主要内容区域 -->
+
+    <!-- 主要内容区域 - 添加过渡动画 -->
     <main class="flex-grow">
-      <router-view />
+      <transition name="page-transition">
+        <router-view />
+      </transition>
     </main>
-    
+
     <!-- 页脚 -->
     <FooterComponent />
   </div>
@@ -26,12 +28,12 @@ const route = useRoute()
 // 检查本地存储中的主题偏好
 onMounted(() => {
   // 检查主题偏好
-  if (localStorage.getItem('theme') === 'dark' || 
+  if (localStorage.getItem('theme') === 'dark' ||
       (!localStorage.getItem('theme') && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
     isDarkMode.value = true
-    document.documentElement.classList.add('dark')
+    document.documentElement.classList.add('dark-mode')
   }
-  
+
   // 初始化AOS动画库
   import('aos').then(aos => {
     aos.default.init({
@@ -60,9 +62,9 @@ defineExpose({
 /* 基础样式 */
 body {
   background-color: #f8fafc;
-  background-image: 
-    radial-gradient(at 80% 10%, rgba(99, 102, 241, 0.1) 0px, transparent 50%),
-    radial-gradient(at 20% 90%, rgba(139, 92, 246, 0.1) 0px, transparent 50%);
+  background-image:
+      radial-gradient(at 80% 10%, rgba(99, 102, 241, 0.1) 0px, transparent 50%),
+      radial-gradient(at 20% 90%, rgba(139, 92, 246, 0.1) 0px, transparent 50%);
   background-attachment: fixed;
   min-height: 100vh;
   transition: background-color 0.3s ease, color 0.3s ease;
@@ -74,11 +76,19 @@ body {
   font-family: 'JetBrains Mono', monospace;
 }
 
-body.dark-mode {
-  background-color: #0f172a;
-  background-image: 
-    radial-gradient(at 80% 10%, rgba(99, 102, 241, 0.05) 0px, transparent 50%),
-    radial-gradient(at 20% 90%, rgba(139, 92, 246, 0.05) 0px, transparent 50%);
-  color: #ffffff;
+/* 页面过渡动画 */
+.page-transition-enter-active,
+.page-transition-leave-active {
+  transition: all 0.5s ease;
+}
+
+.page-transition-enter-from {
+  opacity: 0;
+  transform: translateY(20px);
+}
+
+.page-transition-leave-to {
+  opacity: 0;
+  transform: translateY(-20px);
 }
 </style>

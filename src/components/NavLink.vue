@@ -1,9 +1,9 @@
 <template>
-  <router-link 
-    v-bind="$props" 
-    class="nav-link"
-    :class="{ 'active': active }"
-    @click="handleClick"
+  <router-link
+      v-bind="$props"
+      class="nav-link"
+      :class="{ 'active': active }"
+      @click="handleClick"
   >
     <slot />
   </router-link>
@@ -45,19 +45,14 @@ const handleClick = () => {
   color: #ffffff;
 }
 
+/* 移除下划线效果 */
 .nav-link::after {
-  content: '';
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  width: 0;
-  height: 2px;
-  background-color: #ffffff;
-  transition: width 0.3s ease;
+  display: none;
 }
 
-.nav-link:hover::after,
-.nav-link.active::after {
-  width: 100%;
+/* 可以添加其他活跃状态样式替代下划线 */
+.nav-link.active {
+  color: #8b5cf6;
+  font-weight: 500;
 }
 </style>

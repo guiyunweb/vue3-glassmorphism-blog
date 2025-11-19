@@ -203,52 +203,52 @@ onMounted(() => {
   margin-left: 0.5rem;
 }
 
-/* 深色模式样式 */
+/* 深色模式样式统一使用CSS变量 */
 .dark-mode .glass-effect {
-  background: rgba(15, 23, 42, 0.95);
-  border-color: rgba(255, 255, 255, 0.1);
+  background: var(--color-bg-secondary);
+  border-color: var(--color-border);
 }
 
 .dark-mode .text-gray-800 {
-  color: #ffffff;
+  color: var(--color-text-primary);
 }
 
 .dark-mode .text-gray-700 {
-  color: #ffffff;
+  color: var(--color-text-primary);
 }
 
 .dark-mode .text-gray-600 {
-  color: #ffffff;
+  color: var(--color-text-secondary);
 }
 
 .dark-mode .text-gray-500 {
-  color: #e2e8f0;
+  color: var(--color-text-secondary);
 }
 
 .dark-mode .border-gray-200,
 .dark-mode .border-gray-300 {
-  border-color: #475569 !important;
+  border-color: var(--color-border) !important;
 }
 
 .dark-mode .archive-item {
-  border-color: #475569 !important;
-  background-color: #1e293b !important;
+  border-color: var(--color-border) !important;
+  background-color: var(--color-bg-secondary) !important;
 }
 
 .dark-mode .archive-item:hover {
-  background-color: #334155 !important;
+  background-color: var(--color-bg-tertiary) !important;
 }
 
 .dark-mode .archive-date {
-  color: #e2e8f0 !important;
+  color: var(--color-text-secondary) !important;
 }
 
 .dark-mode .archive-title {
-  color: #ffffff !important;
+  color: var(--color-text-primary) !important;
 }
 
 .dark-mode .archive-tag {
   background-color: rgba(139, 92, 246, 0.3);
-  color: #cbd5e1;
+  color: var(--color-text-secondary);
 }
 </style>
